@@ -1,0 +1,76 @@
+﻿<h1>Mostrar series - CLIENTE</h1>
+
+<h4>Series</h4>
+<a href="InsertarSerie">Insertar serie</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id Serie</th>
+            <th>Nombre</th>
+            <th>Imagen</th>
+            <th>Puntuacion</th>
+            <th>Año</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tabla">
+
+    </tbody>
+</table>
+
+@section scripts {
+<script>
+    var urlApi = "https://seriespersonajesapiapb.azurewebsites.net";
+    $(document).ready(function () {
+        cargarSeries();
+        function cargarSeries() {
+            $("#tabla").html("");
+            var request = "/api/series";
+            $.ajax({
+                url: urlApi + request,
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (index, serie) {
+                        var tr = $("<tr></tr>");
+                        var tdId = $("<td></td>");
+                        tdId.text(serie.idSerie);
+                        var tdNombre = $("<td></td>");
+                        tdNombre.text(serie.nombre);
+                        var tdImagen = $("<td></td>");
+                        var img = $("<img></img>");
+                        img.attr("src", serie.imagen);
+                        img.attr("height", "200px");
+                        tdImagen.append(img);
+                        var tdPuntuacion = $("<td></td>");
+                        tdPuntuacion.text(serie.puntuacion);
+                        var tdAño = $("<td></td>");
+                        tdAño.text(serie.año);
+                        var tdAccion = $("<td></td>");
+                        var buttonEliminar = $("<button></button>");
+                        buttonEliminar.text("Eliminar - CLIENTE");
+                        buttonEliminar.addClass("btn btn-danger");
+                        buttonEliminar.on("click", function () {
+                            var requestEliminar = "/api/series/" + serie.idSerie;
+                            $.ajax({
+                                url: urlApi + requestEliminar
+                                , type: "DELETE"
+                                , success: function () {
+                                    cargarSeries();
+                                }
+                            });
+                        });
+                        tdAccion.append(buttonEliminar);
+                        var href = $("<a></a>");
+                        href.text("Ver personajes")
+                        href.attr("href", "VerPersonajesSerie?idserie=" + serie.idSerie);
+                        tdAccion.append(href);
+                        tr.append(tdId, tdNombre, tdImagen, tdPuntuacion, tdAño, tdAccion);
+                        $("#tabla").append(tr);
+                    });
+                }
+            });
+        }
+    });
+</script>
+}

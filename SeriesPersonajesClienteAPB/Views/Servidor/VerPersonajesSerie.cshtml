@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SeriesPersonajesClienteAPB.Models.Personaje>
+
+@{
+    ViewData["Title"] = "VerPersonajesSerie";
+}
+
+<h1>Ver Personajes por Serie - SERVIDOR</h1>
+
+<p>
+    <a asp-action="InsertarPersonaje" class="btn btn-success">Insertar personaje</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPersonaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen)
+            </th>
+            <th>
+                Serie
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPersonaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <img src="@item.Imagen" height="200px"/>
+            </td>
+            <td>
+                @ViewData["SERIE"]
+            </td>
+            <td>
+                <a asp-action="CambiarSerie" asp-route-id="@item.IdPersonaje" class="btn btn-primary">Cambiar serie - SERVIDOR</a>
+                <a asp-action="EliminarPersonaje" asp-route-id="@item.IdPersonaje" class="btn btn-danger">Eliminar personaje - SERVIDOR</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

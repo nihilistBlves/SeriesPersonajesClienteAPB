@@ -1,0 +1,43 @@
+﻿@model SeriesPersonajesClienteAPB.Models.Personaje
+
+@{
+    ViewData["Title"] = "InsertarPersonaje";
+    List<Serie> series = (List<Serie>)ViewData["SERIES"];
+}
+
+<h1>Insertar Personaje - SERVIDOR</h1>
+
+<h4>Personaje</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="InsertarPersonaje">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Imagen" class="control-label"></label>
+                <input asp-for="Imagen" class="form-control" />
+                <span asp-validation-for="Imagen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Serie</label>
+                <select name="IdSerie" class="form-control">
+                    @foreach (Serie serie in series) {
+                        <option value="@serie.IdSerie">@serie.Nombre</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Insertar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

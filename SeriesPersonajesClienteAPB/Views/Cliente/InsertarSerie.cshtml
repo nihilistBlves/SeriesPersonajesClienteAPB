@@ -1,0 +1,51 @@
+﻿<h1>Insertar serie - CLIENTE</h1>
+<div>
+    <div class="mb-3">
+        <label>Nombre</label>
+        <input type="text" id="nombre" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Imagen</label>
+        <input type="text" id="imagen" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Puntuacion</label>
+        <input type="text" id="puntuacion" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Año</label>
+        <input type="text" id="año" class="form-control" />
+    </div>
+    <button id="botonInsertar" class="btn btn-primary">Insertar serie</button>
+</div>
+
+@section scripts {
+<script>
+    var urlApi = "https://seriespersonajesapiapb.azurewebsites.net";
+    $(document).ready(function () {
+        $("#botonInsertar").on("click", function () {
+            var nombre = $("#nombre").val();
+            var imagen = $("#imagen").val();
+            var puntuacion = parseFloat($("#puntuacion").val());
+            var año = parseInt($("#año").val());
+            var serie = new Object();
+            serie.idSerie = 1;
+            serie.nombre = nombre;
+            serie.imagen = imagen;
+            serie.puntuacion = puntuacion;
+            serie.año = año;
+            var json = JSON.stringify(serie);
+            var request = "/api/series";
+            $.ajax({
+                url: urlApi + request
+                , type: "POST"
+                , data: json
+                , contentType: "application/json"
+                , success: function () {
+                    window.location.href = "MostrarSeries";
+                }
+            });
+        });
+    });
+</script>
+}

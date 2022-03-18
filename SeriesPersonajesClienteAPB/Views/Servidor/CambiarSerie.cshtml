@@ -1,0 +1,42 @@
+﻿@model Personaje
+<h1>Cambiar serie - SERVIDOR</h1>
+
+@{ 
+    List<Serie> series = (List<Serie>)ViewData["SERIES"];
+}
+
+<h4>Personaje</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="text" name="IdPersonaje" value="@Model.IdPersonaje" hidden/>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" disabled/>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Imagen" class="control-label"></label>
+                <img src="@Model.Imagen" height="200px"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Serie</label>
+                <select name="IdSerie" class="form-control">
+                    @foreach (Serie serie in series) {
+                        if (serie.IdSerie == Model.IdSerie) {
+                            <option value="@serie.IdSerie" selected>@serie.Nombre</option>
+                        }
+                        else {
+                            <option value="@serie.IdSerie">@serie.Nombre</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Cambiar serie" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

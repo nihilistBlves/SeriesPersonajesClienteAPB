@@ -1,0 +1,64 @@
+﻿<h1>Ver Personajes por Serie - CLIENTE</h1>
+<h4>Personajes de <span id="serie"></span></h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id Personaje</th>
+            <th>Nombre</th>
+            <th>Imagen</th>
+        </tr>
+    </thead>
+    <tbody id="tabla">
+
+    </tbody>
+</table>
+
+@section scripts {
+<script>
+    var urlApi = "https://seriespersonajesapiapb.azurewebsites.net";
+    $(document).ready(function () {
+        cargarPersonajes();
+        cargarNombreSerie();
+        function cargarPersonajes() {
+            var idserie = "";
+            let searchParams = new URLSearchParams(window.location.search)
+            if (searchParams.has("idserie")) {
+                idserie = searchParams.get("idserie");
+            }
+            var request = "/api/Series/PersonajesSerie/" + idserie;
+            $.ajax({
+                url: urlApi + request,
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    var html = "";
+                    $.each(data, function (index, personaje) {
+                        html += "<tr>";
+                        html += "<td>" + personaje.idPersonaje + "</td>";
+                        html += "<td>" + personaje.nombre + "</td>";
+                        html += "<td><img src='" + personaje.imagen + "' height='200px />'</td>";
+                        html += "</tr>";
+                    });
+                    $("#tabla").html(html);
+                }
+            });
+        }
+        function cargarNombreSerie() {
+            var idserie = "";
+            let searchParams = new URLSearchParams(window.location.search)
+            if (searchParams.has("idserie")) {
+                idserie = searchParams.get("idserie");
+            }
+            var request = "/api/Series/" + idserie;
+            $.ajax({
+                url: urlApi + request,
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $("#serie").html(data.nombre);
+                }
+            });
+        }
+    });
+</script>
+}

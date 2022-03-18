@@ -1,0 +1,48 @@
+﻿@model SeriesPersonajesClienteAPB.Models.Serie
+
+@{
+    ViewData["Title"] = "DetallesSerie";
+}
+
+<h1>Detalles Serie - SERVIDOR</h1>
+
+<div>
+    <h4>Serie</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdSerie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdSerie)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imagen)
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="@Model.Imagen" height="200px"/>
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Puntuacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Puntuacion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Año)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Año)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="ModificarSerie" asp-route-id="@Model.IdSerie" class="btn btn-primary">Modificar SERVIDOR</a>
+    <a asp-action="MostrarSeries">Volver a series (servidor)</a>
+</div>
